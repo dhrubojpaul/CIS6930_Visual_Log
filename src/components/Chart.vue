@@ -241,6 +241,10 @@ export default {
 					.attr("y", function (d) {
 						return component.chart.yScale(d.ID) + component.chart.yScale.bandwidth() * .3;
 					})
+					.on("click", function(d){
+						component.$store.commit("setCurrentDocument", d.ID);
+						component.$store.commit("setSheetFlag", true);
+					})
 					.on("mouseover", function (d) {
 						d3.select (this).attr("fill","red");
 						tooltipDiv.attr("class", "tooltip " + LegendValues.DOC_OPEN.classTT)

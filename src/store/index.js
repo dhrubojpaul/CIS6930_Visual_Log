@@ -73,6 +73,9 @@ export default new Vuex.Store({
     interactionViewData: undefined,
     //dataset end time
     datasetEndTime: undefined,
+    //document view
+    selectedDocument: undefined,
+    documentViewFlag: false
   },
   mutations: {
     setTime(state, timeline){
@@ -125,6 +128,28 @@ export default new Vuex.Store({
     setDrawer(state,drawer){
       state.drawer = drawer;
     },
+    setSheetFlag(state,flag){
+      state.documentViewFlag = flag;
+    },
+    setCurrentDocument(state, currentDocumentID){
+      var documentIDMerged = currentDocumentID.replace(/\s/g, ''),
+          datasetName = "";
+      if(documentIDMerged.includes("Armsdealing")){
+        currentDocumentID = documentIDMerged.replace("Armsdealing", "ArmsDealing");
+        datasetName = "Arms Dealing";
+      } else if(documentIDMerged.includes("TerroristActivity")){
+        currentDocumentID = currentDocumentID.replace("  ", " ");
+        datasetName = "Terrorist Activity";
+      } else if(documentIDMerged.includes("Disappearance")){
+        currentDocumentID = documentIDMerged.replace("Disappearance", "").replace(/\s/g, '');
+        currentDocumentID = "Disappearance " + currentDocumentID; 
+        datasetName = "Disappearance";
+      }
+      var temporarySelectedDocument = state.database.find(function(dataset){return dataset.id == state.selected.datasetID})
+                                .documents.find(function(document){return document.id == currentDocumentID});
+      temporarySelectedDocument.datasetName = datasetName;
+      state.selectedDocument = temporarySelectedDocument;
+    }
   },
   actions: {},
   modules: {}

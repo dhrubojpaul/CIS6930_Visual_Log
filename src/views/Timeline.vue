@@ -9,6 +9,7 @@
             </v-col>
             <v-col cols=12><timepicker :resizewatcher=windowWidth></timepicker></v-col>
         </v-row>
+        <documentview></documentview>
     </v-container>
 </template>
 
@@ -18,6 +19,7 @@ import cloud from "../components/WordCloud";
 import timepicker from "../components/Timepicker";
 import histogram from "../components/Summary";
 import legends from "../components/Legends";
+import documentview from "../components/DocumentView"
 
 export default {
     components: {
@@ -25,7 +27,8 @@ export default {
         cloud,
         histogram,
         timepicker,
-        legends
+        legends,
+        documentview
     },
     data: function(){
         return {

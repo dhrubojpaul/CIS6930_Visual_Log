@@ -5,7 +5,7 @@ var InteractionType = {
             name: "Think Aloud",
             color: "#8dd3c7",
             onByDefault: true,
-            disabled: true,
+            disabled: false,
             capsName: "THINK_ALOUD",
             shape: "triangle_r"
         },
@@ -18,7 +18,7 @@ var InteractionType = {
             shape: "rect"
         },
         "Reading": {
-            name: "Reading",
+            name: "Doc Interact",
             color: "#bebada",
             onByDefault: true,
             disabled: false,
@@ -41,20 +41,29 @@ var InteractionType = {
             capsName: "HIGHLIGHT",
             shape: "diamond"
         },
+        "Title_hover": {
+            name: "Title Hover",
+            color: "#fdb462",
+            onByDefault: true,
+            disabled: false,
+            capsName: "BOOKMARK",
+            shape: "wye_r"
+        },
         "Mouse_hover": {
             name: "Mouse Hover",
             color: "#fdb462",
             onByDefault: true,
             disabled: true,
-            capsName: "BOOKMARK",
+            capsName: "Mouse Hover",
             shape: "wye_r"
         },
         "BOOKMARK": {
             name: "Bookmark",
             color: "#fdb462",
             onByDefault: true,
-            disabled: true,
-            capsName: "BOOKMARK"
+            disabled: false,
+            capsName: "BOOKMARK",
+            shape: "rect"
         },
         "Connection": {
             name: "Connection",
@@ -65,7 +74,7 @@ var InteractionType = {
             shape: "circle"
         },
         "Draging": {
-            name: "Dragging",
+            name: "Move",
             color: "#fccde5",
             onByDefault: true,
             disabled: false,
@@ -81,7 +90,7 @@ var InteractionType = {
             shape: "rect"
         },
         "Add note": {
-            name: "Add Note",
+            name: "Write in Note",
             color: "#bc80bd",
             onByDefault: true,
             disabled: false,
