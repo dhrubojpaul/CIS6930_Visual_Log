@@ -58,8 +58,8 @@ export default {
       this.updateSummary(this.interactionViewData);
     },
     initializeVariables: function () {
-      this.size.width= window.innerWidth * 0.23;
-      this.size.height= window.innerHeight * 0.25;
+      this.size.width= window.innerWidth * 0.16;
+      this.size.height= window.innerHeight * 0.5;
       this.size.summaryWidth = this.size.width - this.size.margin.left - this.size.margin.right;
       this.size.summaryHeight = this.size.height - this.size.margin.top - this.size.margin.bottom;
     },

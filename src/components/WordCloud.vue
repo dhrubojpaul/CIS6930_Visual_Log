@@ -32,6 +32,7 @@ export default {
     },
     mounted(){
         this.resizeWithWindow();
+        console.log(window.histograms1);
     },
     methods: {
         resizeWithWindow: function(){
@@ -69,7 +70,7 @@ export default {
            
             //Get dataset
             if (docTitles[0] == "Armsdealing") {
-                histograms = {}//histograms1
+                histograms = window.histograms1
             } else if (docTitles[0] == "TerroristActivity") {
                 histograms = {}//histograms2
             } else if (docTitles[0] == "Disappearance") {

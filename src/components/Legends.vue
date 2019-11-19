@@ -1,34 +1,32 @@
 <template>
-    <svg :height="height" :width="width">
-        <g v-for="(interactionLegend,interactionLegendIndex) in interactionLegendList" :key=interactionLegendIndex>
-            <rect v-if="interactionLegend.shape=='rect'" :x=interactionLegend.x :y=interactionLegend.y :style="'fill:' + interactionLegend.color"
-                :width=interactionLegend.width :height=interactionLegend.height></rect>
-            <circle v-else-if="interactionLegend.shape=='circle'" :cx=(interactionLegend.x+interactionLegend.width/2) :cy="interactionLegend.y+interactionLegend.width/2" 
-                :style="'fill:' + interactionLegend.color"
-                :r=interactionLegend.width/2></circle>
-            <path v-else-if="interactionLegend.shape=='diamond'"
-                :transform="'translate('+(interactionLegend.x+interactionLegend.width/2)+','+ (interactionLegend.y+interactionLegend.width/2)+') scale(1.5)'"
-                :style="'fill:' + interactionLegend.color"
-                :d=diamondSymbol></path>
-            <path v-else-if="interactionLegend.shape=='wye'"
-                :transform="'translate('+(interactionLegend.x+interactionLegend.width/2)+','+ (interactionLegend.y+interactionLegend.width/2)+')  scale(1.5)'"
-                :style="'fill:' + interactionLegend.color"
-                :d=wyeSymbol></path>
-            <path v-else-if="interactionLegend.shape=='wye_r'"
-                :transform="'translate('+(interactionLegend.x+interactionLegend.width/2)+','+ (interactionLegend.y+interactionLegend.width/2)+')  scale(1.5) rotate(180)'"
-                :style="'fill:' + interactionLegend.color"
-                :d=wyeSymbol></path>
-            <path v-else-if="interactionLegend.shape=='triangle'"
-                :transform="'translate('+(interactionLegend.x+interactionLegend.width/2)+','+ (interactionLegend.y+interactionLegend.width/1.5)+') scale(2) '"
-                :style="'fill:' + interactionLegend.color"
-                :d=triangleSymbol></path>
-            <path v-else-if="interactionLegend.shape=='triangle_r'"
-                :transform="'translate('+(interactionLegend.x+interactionLegend.width/2)+','+ (interactionLegend.y+interactionLegend.width/3)+') scale(2) rotate(180)'"
-                :style="'fill:' + interactionLegend.color"
-                :d=triangleSymbol></path>
-            <text :x="interactionLegend.x+25" :y="interactionLegend.y+13" style="font-size: 11">{{interactionLegend.name}}</text>
-        </g>
-    </svg>
+        <v-row style="margin-left:3vw">
+            <v-col cols=2 style="height:30px;padding:0;" v-for="(interactionLegend,interactionLegendIndex) in interactionLegendList" :key=interactionLegendIndex>
+                <svg width=100% height=30px>
+                    <rect v-if="interactionLegend.shape=='rect'" x=10 y=5 :style="'fill:' + interactionLegend.color"
+                        :width=interactionLegend.width :height=interactionLegend.height></rect>
+                    <circle v-else-if="interactionLegend.shape=='circle'" :cx=(10+interactionLegend.width/2) :cy="5+interactionLegend.width/2" 
+                        :style="'fill:' + interactionLegend.color"
+                        :r=interactionLegend.width/2></circle>
+                    <path v-else-if="interactionLegend.shape=='diamond'"
+                        transform="translate(10,16) scale(1.3)"
+                        :style="'fill:' + interactionLegend.color"
+                        :d=diamondSymbol></path>
+                    <path v-else-if="interactionLegend.shape=='wye'"
+                        transform="translate(20,16)  scale(1.5)" :style="'fill:' + interactionLegend.color" :d=wyeSymbol></path>
+                    <path v-else-if="interactionLegend.shape=='wye_r'"
+                        transform="translate(20,16)  scale(1.5) rotate(180)" :style="'fill:' + interactionLegend.color" :d=wyeSymbol></path>
+                    <path v-else-if="interactionLegend.shape=='triangle'"
+                        transform="translate(10,16) scale(1.5)"
+                        :style="'fill:' + interactionLegend.color"
+                        :d=triangleSymbol></path>
+                    <path v-else-if="interactionLegend.shape=='triangle_r'"
+                        transform="translate(20,13) scale(1.5) rotate(180)"
+                        :style="'fill:' + interactionLegend.color"
+                        :d=triangleSymbol></path>
+                    <text x="35" y="20" style="font-size: 11">{{interactionLegend.name}}</text>
+                </svg>
+            </v-col>
+        </v-row>
 </template>
 
 <script>
@@ -51,9 +49,9 @@ export default {
             component.interactionLegendList.forEach(function(interactionLegend, interactionLegendIndex){
                 interactionLegend.width = 20;
                 interactionLegend.height = 20;
-                interactionLegend.y = 0;
-                interactionLegend.x =  (component.width/component.interactionLegendList.length) 
-                                        * interactionLegendIndex;
+                interactionLegend.y = interactionLegendIndex<6 ? 0: 30;
+                interactionLegend.x =  interactionLegendIndex < 6 ? component.width/6 * interactionLegendIndex 
+                                        : component.width/6 * (interactionLegendIndex-6) ;
             });
         },
     },

@@ -37,6 +37,7 @@
 
     <v-content>
       <v-container>
+        <legends></legends>
         <transition>
         <router-view></router-view>
         </transition>
@@ -49,7 +50,12 @@
 import selectionList from "./data/selectionList";
 import database from "./data/database";
 
+import legends from "./components/Legends";
+
 export default {
+  components: {
+    legends
+  },
   props: {
     source: String,
   },

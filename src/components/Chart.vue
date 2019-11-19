@@ -53,7 +53,7 @@ export default {
         chart: {width: 0, height: 0},
         margin: {top: 10, right: 10, bottom: 100, left: 50}
       },
-      meta: {axis: {xLabel: "time",yLabel: "documents"}},
+      meta: {axis: {xLabel: "Time",yLabel: "Documents"}},
       chart: undefined,
 	  transition: undefined,
 	  glyphs: {
@@ -73,8 +73,8 @@ export default {
   },
   methods: {
     initializeVariables: function() {
-      this.size.svg.width = window.innerWidth*0.5;
-      this.size.svg.height = window.innerHeight*0.51;
+      this.size.svg.width = window.innerWidth*0.4;
+      this.size.svg.height = window.innerHeight*0.5;
       this.size.chart.width = this.size.svg.width - this.size.margin.left - this.size.margin.right;
       this.size.chart.height = this.size.svg.height - this.size.margin.top - this.size.margin.bottom;
     },

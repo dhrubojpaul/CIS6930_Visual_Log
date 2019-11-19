@@ -1,13 +1,20 @@
 <template>
     <v-container>
-        <legends height="20" :width=windowWidth*0.7></legends>
         <v-row>
-            <v-col cols=8><chart :resizewatcher=windowWidth></chart></v-col>
-            <v-col cols=4>
-                <cloud :resizewatcher=windowWidth></cloud>
-                <histogram :resizewatcher=windowWidth></histogram>
+            <v-col cols=10>
+                <v-row no-gutters>
+                    <v-col cols=8><chart :resizewatcher=windowWidth></chart></v-col>
+                    <v-col cols=4><histogram :resizewatcher=windowWidth></histogram></v-col>
+                </v-row>
+                <v-row no-gutters>
+                    <v-col cols=12><timepicker :resizewatcher=windowWidth></timepicker></v-col>
+                </v-row>
             </v-col>
-            <v-col cols=12><timepicker :resizewatcher=windowWidth></timepicker></v-col>
+            <v-col cols=2>
+                <v-row no-gutters>
+                    <v-col cols=12><wordlist :resizewatcher=windowWidth></wordlist></v-col>
+                </v-row>
+            </v-col>
         </v-row>
         <documentview></documentview>
     </v-container>
@@ -15,20 +22,18 @@
 
 <script>
 import chart from "../components/Chart";
-import cloud from "../components/WordCloud";
 import timepicker from "../components/Timepicker";
 import histogram from "../components/Summary";
-import legends from "../components/Legends";
-import documentview from "../components/DocumentView"
+import documentview from "../components/DocumentView";
+import wordlist from "../components/WordCloud";
 
 export default {
     components: {
         chart,
-        cloud,
         histogram,
         timepicker,
-        legends,
-        documentview
+        documentview,
+        wordlist
     },
     data: function(){
         return {

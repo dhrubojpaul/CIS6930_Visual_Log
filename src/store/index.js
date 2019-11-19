@@ -74,7 +74,7 @@ export default new Vuex.Store({
     //dataset end time
     datasetEndTime: undefined,
     //document view
-    selectedDocument: undefined,
+    selectedDocument: {title:""},
     documentViewFlag: false
   },
   mutations: {

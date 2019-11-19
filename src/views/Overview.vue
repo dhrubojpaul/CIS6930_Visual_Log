@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols=12>
-          <legends :height="configuration.size.svgHeight/12" :width="configuration.size.svgWidth"></legends>
+      <v-col cols=10>
+        <v-row no-gutters>
           <svg :height="configuration.size.svgHeight" :width="configuration.size.svgWidth">
             <g v-for="(user,userIndex) in users" :key=userIndex>
               <g><text :x=user.x :y=user.y style="font-size: 14">{{user.name}}</text></g>
@@ -10,7 +10,8 @@
                 <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
                   <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
-                    @click="goToInteractionView(user, segment)"></rect>
+                    @dblclick="goToInteractionView(user, segment)"
+                    @click="findSimilarities(user,segment)"></rect>
                 </g>
               </g>
             </g>
@@ -27,16 +28,23 @@
               </text>
             </g>
           </svg>
+        </v-row>
+      </v-col>
+      <v-col cols=2>
+        <v-row no-gutters>
+          <v-col cols=12><wordlist :resizewatcher=configuration.size.svgWidth></wordlist></v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import legends from "../components/Legends";
+import wordlist from "../components/WordList";
+
 export default {
   components: {
-    legends
+    wordlist
   },
   data: function() {
     return {
@@ -71,11 +79,14 @@ export default {
     }
   },
   methods: {
+    findSimilarities(){
+      this.showSnack("Feature under development");
+    },
     showSnack: function(text){
       this.$store.commit("showSnack", text);
     },
     resizeWithWindow: function(){
-      this.configuration.size.svgWidth = window.innerWidth * 0.7;
+      this.configuration.size.svgWidth = window.innerWidth * 0.6;
       this.configuration.size.svgHeight = window.innerHeight * 0.7;
       this.configuration.size.segmentsLeftPadding = window.innerWidth * 0.1;
       this.calculateAttributesForSegments();
