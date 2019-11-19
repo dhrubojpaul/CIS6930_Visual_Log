@@ -171,7 +171,7 @@ export default {
     updateChart: function (interactionViewData, timeline, interactionTypeList) {
 		var component = this;
 		var tooltipDiv = d3.select(".tooltip")
-		var tooltipOffset = [0, -40]
+		var tooltipOffset = [0, 30]
 		if (interactionTypeList.THINK_ALOUD) {
 			component.glyphs.think = component.chart.plotArea.selectAll("." + LegendValues.THINK_ALOUD.class)
 				.data(interactionViewData.THINK_ALOUD)
