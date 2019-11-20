@@ -83,7 +83,7 @@ export default {
     },
     methods: {
         resizeWithWindow: function(){
-            this.size.width = window.innerWidth * 0.6;
+            this.size.width = window.innerWidth * 0.7;
             this.size.height = window.innerHeight * 0.07;
             this.size.leftPad = 1.5;
             this.calculateAttributesForSegments();

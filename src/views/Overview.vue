@@ -10,7 +10,8 @@
                 <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
                   <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
-                    @click="goToInteractionView(user, segment)"></rect>
+                    @click="goToInteractionView(user, segment)"
+                    @mouseover="selectTimeSegment(user, segment)"></rect>
                 </g>
               </g>
             </g>
@@ -26,6 +27,9 @@
                 {{parseInt((datasetEndTime/10*(i-1)/10)/60) + "m" + parseInt((datasetEndTime/10*(i-1)/10)%60) + "s"}}
               </text>
             </g>
+          </svg>
+          <svg height=20 :width="configuration.size.svgWidth+20">
+            <text :x=configuration.size.svgWidth/2 y=10 style="font-size: 11">Time</text>
           </svg>
         </v-row>
       </v-col>
@@ -78,6 +82,15 @@ export default {
     }
   },
   methods: {
+    selectTimeSegment(user,segment){
+      this.$store.commit("setSelected", {
+        datasetID: this.selected.datasetID,
+        userID: user.id,
+        users: this.selected.users,
+        interactionTypes: this.selected.interactionTypes
+      });
+      this.$store.commit("setTime", {min:0,max:user.endTime,range:[segment.start*10, segment.end*10]});
+    },
     findSimilarities(){
       this.showSnack("Feature under development");
     },

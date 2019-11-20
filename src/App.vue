@@ -5,22 +5,22 @@
         <v-list-item v-if="this.$route.name=='timeline'">
           <v-btn block to="/overview">Back to Overview</v-btn>
         </v-list-item>
-        <v-subheader>Select Dataset</v-subheader>
+        <v-subheader>Dataset</v-subheader>
         <v-list-item>
           <v-select :items="selectionList.dataset" label="Select Dataset" item-text="name" item-value="id"
             v-model="selectionList.selected.datasetID" solo></v-select>
         </v-list-item>
-        <v-subheader v-if="this.$route.name=='timeline'">Select User</v-subheader>
+        <v-subheader v-if="this.$route.name=='timeline'">User</v-subheader>
         <v-list-item v-if="this.$route.name=='timeline'">
           <v-select :items="selectionList.users" label="Select User" item-text="name" item-value="id"
             v-model="selectionList.selected.userID" solo></v-select>
         </v-list-item>
-        <v-subheader v-if="this.$route.name=='overview'">Select Users</v-subheader>
+        <v-subheader v-if="this.$route.name=='overview'">Users</v-subheader>
         <v-list-item v-if="this.$route.name=='overview'">
           <v-select :items="selectionList.users" label="Select Users" item-text=name item-value=id 
             v-model="selectionList.selected.users" multiple solo></v-select>
         </v-list-item>
-        <v-subheader v-if="this.$route.name=='timeline'">Select Interaction Types</v-subheader>
+        <v-subheader v-if="this.$route.name=='timeline'">Interaction Types</v-subheader>
         <v-list-item v-if="this.$route.name=='timeline'">
           <v-select :items="selectionList.interactionType" label="Select Interactions" item-text=name item-value=key 
             v-model="selectionList.selected.interactionTypes" multiple solo></v-select>
