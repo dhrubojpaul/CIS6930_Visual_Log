@@ -96,7 +96,14 @@ export default {
       this.updateAxis(timeline, interactionViewData);
       this.updateChart(interactionViewData, timeline, interactionTypeList);
     },
-    formatAsTime: function(seconds) { 
+    formatAsTime: function(seconds) {
+      var minutesFormat = String(Math.floor(seconds / 60)).padStart(2, '0')
+      var secondsFormat = String(Math.floor(seconds % 60)).padStart(2, '0')
+      
+      var formattedTime = minutesFormat + "m" + secondsFormat + "s";
+      return formattedTime; 
+	},
+    formatAsTimeHMS: function(seconds) { 
       var hoursFormat = String(Math.floor(seconds / 3600)).padStart(2, '0')
       var minutesFormat = String(Math.floor((seconds / 60)) % 60).padStart(2, '0')
       var secondsFormat = String(Math.floor(seconds % 60)).padStart(2, '0')
@@ -105,6 +112,8 @@ export default {
       return formattedTime; 
     },
     updateAxis: function (t, d) {
+	  var component = this;
+	  
       this.chart.selectAll(".axis").remove();
 
       // x axis
@@ -113,6 +122,9 @@ export default {
         .range([100, this.size.chart.width]);
 
       this.chart.xAxis = d3.axisBottom()
+	  	.tickFormat(function (d) {
+			  return component.formatAsTime(d / 10);
+			})
         .tickSizeOuter(0)
         .scale(this.chart.xScale);
 
@@ -163,11 +175,6 @@ export default {
         .attr("transform", "translate(" + (this.size.margin.left / 2.0) + ", " + (this.size.chart.height / 2.0) + ") rotate(-90)")
         .text(this.meta.axis.yLabel);
     },
-
-
-
-
-    
     updateChart: function (interactionViewData, timeline, interactionTypeList) {
 		var component = this;
 		var tooltipDiv = d3.select(".tooltip")
@@ -509,11 +516,41 @@ export default {
 								.transition().duration(200)		
 								.style("opacity", 0.9)
 								.text("Connection of: \""+d.Text+"\"\n at: "+ component.formatAsTime(d.time / 10));	
+						
+						// var connections = d.Text.split(",")
+						// data.DOC_OPEN.forEach(function(item, index) {
+						// 	connections.forEach(function(item2, index2) {
+						// 		if (item.ID.replace(/ /g, '').toUpperCase() == item2.toUpperCase()) {
+						// 			if (connectionHover != null) {
+						// 				connectionHover.remove();
+						// 			}
+						// 			connectionHover = chart.plotArea.selectAll("hover").append("svg").data(item2).enter()
+						// 				.append("rect")
+						// 					.attr("width", function() {
+						// 						return chartWidth - 100;
+						// 					})
+						// 					.attr("height", function() {
+						// 						return chart.yScale.bandwidth() * .8;
+						// 					})
+						// 					.attr("x", function() {
+						// 						return chart.xScale(time.range[0]);
+						// 					})
+						// 					.attr("y", function() {
+						// 						return chart.yScale(item.ID) + chart.yScale.bandwidth() * .1;
+						// 					})
+						// 					.attr("fill", "#f0f0f010")
+						// 		}
+						// 	})
+						// })
+
 					})					
 					.on("mouseout", function() {	
 						tooltipDiv.transition()		
 							.duration(500)		
 							.style("opacity", 0);	
+						// if (connectionHover != null) {
+						// 	connectionHover.remove();
+						// }
 					})
 					.call(enter => enter.transition(component.transition)
 						.attr("r", function () {
