@@ -25,7 +25,7 @@ import chart from "../components/Chart";
 import timepicker from "../components/Timepicker";
 import histogram from "../components/Summary";
 import documentview from "../components/DocumentView";
-import wordlist from "../components/WordCloud";
+import wordlist from "../components/WordList";
 
 export default {
     components: {
