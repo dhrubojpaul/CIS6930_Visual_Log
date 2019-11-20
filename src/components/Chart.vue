@@ -96,7 +96,14 @@ export default {
       this.updateAxis(timeline, interactionViewData);
       this.updateChart(interactionViewData, timeline, interactionTypeList);
     },
-    formatAsTime: function(seconds) { 
+    formatAsTime: function(seconds) {
+      var minutesFormat = String(Math.floor(seconds / 60)).padStart(2, '0')
+      var secondsFormat = String(Math.floor(seconds % 60)).padStart(2, '0')
+      
+      var formattedTime = minutesFormat + "m" + secondsFormat + "s";
+      return formattedTime; 
+	},
+    formatAsTimeHMS: function(seconds) { 
       var hoursFormat = String(Math.floor(seconds / 3600)).padStart(2, '0')
       var minutesFormat = String(Math.floor((seconds / 60)) % 60).padStart(2, '0')
       var secondsFormat = String(Math.floor(seconds % 60)).padStart(2, '0')
@@ -105,6 +112,8 @@ export default {
       return formattedTime; 
     },
     updateAxis: function (t, d) {
+	  var component = this;
+	  
       this.chart.selectAll(".axis").remove();
 
       // x axis
@@ -113,6 +122,9 @@ export default {
         .range([100, this.size.chart.width]);
 
       this.chart.xAxis = d3.axisBottom()
+	  	.tickFormat(function (d) {
+			  return component.formatAsTime(d / 10);
+			})
         .tickSizeOuter(0)
         .scale(this.chart.xScale);
 
@@ -163,11 +175,6 @@ export default {
         .attr("transform", "translate(" + (this.size.margin.left / 2.0) + ", " + (this.size.chart.height / 2.0) + ") rotate(-90)")
         .text(this.meta.axis.yLabel);
     },
-
-
-
-
-    
     updateChart: function (interactionViewData, timeline, interactionTypeList) {
 		var component = this;
 		var tooltipDiv = d3.select(".tooltip")
