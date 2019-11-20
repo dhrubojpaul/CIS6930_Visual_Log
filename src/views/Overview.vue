@@ -10,8 +10,7 @@
                 <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
                   <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
-                    @dblclick="goToInteractionView(user, segment)"
-                    @click="findSimilarities(user,segment)"></rect>
+                    @click="goToInteractionView(user, segment)"></rect>
                 </g>
               </g>
             </g>
