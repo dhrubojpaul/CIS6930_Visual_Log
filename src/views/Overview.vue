@@ -10,11 +10,14 @@
                 <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
                   <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
-                    @click="goToInteractionView(user, segment)"
+                    @dblclick="goToInteractionView(user, segment)"
+                    @click="toggleTimeLockFlag"
                     @mouseover="selectTimeSegment(user, segment)"></rect>
                 </g>
               </g>
             </g>
+            <rect :x="selectedIndicator.left" :y=selectedIndicator.y width=3 :height=selectedIndicator.height style="fill:#666666"></rect>
+            <rect :x="selectedIndicator.right" :y=selectedIndicator.y width=3 :height=selectedIndicator.height style="fill:#666666"></rect>
           </svg>
           <svg :height="configuration.size.svgHeight/12" :width="configuration.size.svgWidth+20">
             <line :x1="configuration.size.segmentsLeftPadding" y1="0" 
@@ -59,6 +62,7 @@ export default {
         }
       },
       users: [],
+      timeLockFlag: false
     };
   },
   watch: {
@@ -79,17 +83,46 @@ export default {
     },
     datasetEndTime: function(){
       return this.$store.state.datasetEndTime;
+    },
+    selectedIndicator: function(){
+      if(!this.timeLockFlag){
+        var selectedTimeline = this.$store.state.timeline,
+          left = 0,
+          right = 0,
+          y=0,
+          height = this.configuration.size.svgHeight/this.users.length/1.2,
+          selectedUserID = this.selected.userID;
+
+        left = selectedTimeline.range[0]/this.datasetEndTime*(this.configuration.size.svgWidth - this.configuration.size.segmentsLeftPadding);
+        right = selectedTimeline.range[1]/this.datasetEndTime*(this.configuration.size.svgWidth - this.configuration.size.segmentsLeftPadding);
+
+        left += this.configuration.size.segmentsLeftPadding - 1.5;
+        right += this.configuration.size.segmentsLeftPadding - 1.5;
+
+        var selectedUser = this.users.find(function(user){return user.id == selectedUserID});
+
+        left = selectedUser? left : -50;
+        right = selectedUser? right : -50;
+        y = selectedUser ? selectedUser.y -height/2: -50;
+        return {left,right,height,y};
+      }
+      return this.selectedIndicator;
     }
   },
   methods: {
+    toggleTimeLockFlag: function(){
+      this.timeLockFlag = !this.timeLockFlag;
+    },
     selectTimeSegment(user,segment){
-      this.$store.commit("setSelected", {
-        datasetID: this.selected.datasetID,
-        userID: user.id,
-        users: this.selected.users,
-        interactionTypes: this.selected.interactionTypes
-      });
-      this.$store.commit("setTime", {min:0,max:user.endTime,range:[segment.start*10, segment.end*10]});
+      if(!this.timeLockFlag){
+        this.$store.commit("setSelected", {
+          datasetID: this.selected.datasetID,
+          userID: user.id,
+          users: this.selected.users,
+          interactionTypes: this.selected.interactionTypes
+        });
+        this.$store.commit("setTime", {min:0,max:user.endTime,range:[segment.start*10, segment.end*10]});
+      }
     },
     findSimilarities(){
       this.showSnack("Feature under development");
