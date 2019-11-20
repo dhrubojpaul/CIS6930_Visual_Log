@@ -456,7 +456,7 @@ export default {
 									.delay(10).duration(10)
 									.transition().duration(200)
 									.style("opacity", .9)
-									.text("Doc: "+d.ID+"Highlighted: \""+d.Text+"\"");	
+									.text("Doc: "+d.ID+" Highlighted: \""+d.Text+"\"");	
 						})					
 						.on("mouseout", function() {
 							tooltipDiv.transition()		
@@ -639,8 +639,9 @@ export default {
 						.attr("class", LegendValues.BOOKMARK.class)
 						.attr("d", d3.symbol().type(d3.symbolWye).size(function (){ return component.chart.yScale.bandwidth()*1;}))
 						.attr("transform", function(d) {
-							var size = component.chart.yScale.bandwidth() *1.5;
-							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)-size/2)+") rotate (180)";
+							var size = component.chart.yScale.bandwidth();
+							console.log("output",d.ID,component.chart.yScale(d.ID))
+							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+size/4)+") rotate (180)";
 						})
 						.on("mouseover", function (d) {
 							tooltipDiv.transition()	
@@ -660,16 +661,16 @@ export default {
 						.call(exit => exit.transition(component.transition)
 						.attr("d", d3.symbol().type(d3.symbolWye).size(function (){ return component.chart.yScale.bandwidth()*1;}))
 						.attr("transform", function(d) {
-							var size = component.chart.yScale.bandwidth() *1.5;
-							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)-size/2)+") rotate(180)";
+							var size = component.chart.yScale.bandwidth();
+							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+size/4)+") rotate(180)";
 						})
 						),
 					update => update
 						.call(exit => exit.transition(component.transition)
 						.attr("d", d3.symbol().type(d3.symbolWye).size(function (){ return component.chart.yScale.bandwidth()*1;}))
 						.attr("transform", function(d) {
-							var size = component.chart.yScale.bandwidth() *1.5;
-							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)-size/2)+") rotate(180)";
+							var size = component.chart.yScale.bandwidth();
+							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+size/4)+") rotate(180)";
 						})
 						),
 					exit => exit.remove()
