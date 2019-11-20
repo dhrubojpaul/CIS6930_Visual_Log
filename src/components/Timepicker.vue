@@ -15,14 +15,16 @@
         </v-range-slider>
       </v-col>
       <v-col cols=12>
-          <svg :width="size.width" :height="size.height" :style="'margin-left:'+size.width*.02">
+          <svg :width="size.width+2" :height="size.height+6" :style="'margin-left:'+size.width*.02">
             <g v-for="(segment,segmentIndex) in user.segments" :key=segmentIndex>
                 <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
-                    <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
+                    <rect :x=interactionType.x :y=interactionType.y+3 :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
                     @click="snapIntoSegment(segment)"></rect>
                 </g>
             </g>
+            <rect :x="timeline.range[0]/timeline.max*size.width+1.5" width=3 :height=size.height+6 style="fill:#666666"></rect>
+            <rect :x="timeline.range[1]/timeline.max*size.width-1.5" width=3 :height=size.height+6 style="fill:#666666"></rect>
           </svg>
       </v-col>
     </v-row>
@@ -40,7 +42,7 @@ export default {
             size: {
                 width : 0, height : 0
             },
-            user: {}
+            user: {},
         }
     },
     props: ["resizewatcher"],
@@ -49,6 +51,7 @@ export default {
             deep: true,
             handler: function(value) {
                 this.$store.commit("setTime", value);
+                console.log(this.$refs);
             }
         },
         timelineFromState: {
@@ -68,7 +71,7 @@ export default {
                 this.user = value;
                 this.calculateAttributesForSegments();
             }
-        }
+        },
     },
     computed: {
         timelineFromState: function(){
@@ -80,9 +83,9 @@ export default {
     },
     methods: {
         resizeWithWindow: function(){
-            this.size.width = window.innerWidth * 0.5;
+            this.size.width = window.innerWidth * 0.6;
             this.size.height = window.innerHeight * 0.07;
-            this.size.leftPad = window.innerHeight * 0.05;
+            this.size.leftPad = 1.5;
             this.calculateAttributesForSegments();
         },
         snapIntoSegment: function(segment){
