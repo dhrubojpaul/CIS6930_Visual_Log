@@ -51,7 +51,6 @@ export default {
             deep: true,
             handler: function(value) {
                 this.$store.commit("setTime", value);
-                console.log(this.$refs);
             }
         },
         timelineFromState: {
@@ -83,7 +82,7 @@ export default {
     },
     methods: {
         resizeWithWindow: function(){
-            this.size.width = window.innerWidth * 0.7;
+            this.size.width = window.innerWidth * 0.596;
             this.size.height = window.innerHeight * 0.07;
             this.size.leftPad = 1.5;
             this.calculateAttributesForSegments();

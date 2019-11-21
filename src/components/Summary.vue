@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       summary: undefined,
-      summaryScale: ['Open Document', 'Document Interact', 'Search', 'Highlight', 'Bookmark', 'Connection', 'Move Document', 'Write Note'],
+      summaryScale: ['Doc Open', 'Doc Interact', 'Search', 'Highlight', 'Title Hover', 'Connection', 'Move', 'Write Note'],
       size: {
         width: 0,
         height: 0,

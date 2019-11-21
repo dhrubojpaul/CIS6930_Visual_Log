@@ -37,11 +37,12 @@
       <v-btn icon to="/"><v-icon>mdi-home</v-icon></v-btn>
     </v-app-bar>
 
-    <v-snackbar v-model="snack.flag">{{ snack.text }}<v-btn color="pink" text @click="snack.flag = false">Close</v-btn></v-snackbar>
+    <v-snackbar color="cyan darken-2" v-model="snack.flag">{{ snack.text }}
+      <v-btn text @click="snack.flag = false">Close</v-btn>
+    </v-snackbar>
 
     <v-content>
       <v-container>
-        <legends v-if="this.$route.name != 'home'"></legends>
         <transition>
         <router-view></router-view>
         </transition>
@@ -54,12 +55,7 @@
 import selectionList from "./data/selectionList";
 import database from "./data/database";
 
-import legends from "./components/Legends";
-
 export default {
-  components: {
-    legends
-  },
   props: {
     source: String,
   },

@@ -16,11 +16,13 @@ var SelectionList = {
       },
     ],
     interactionType: [
+      /*
       {
         key: "Think_aloud",
         value: true,
         name: "Think Aloud"
       },
+      */
       {
         key: "Doc_open",
         value: true,
@@ -71,11 +73,13 @@ var SelectionList = {
         value: true,
         name: "Topic Change"
       },
+      /*
       {
         key: "BOOKMARK",
         value: true,
         name: "Bookmark"
       },
+      */
     ],
     users: [
       {id:1, name: "User 1", selectFlag: true},

@@ -1,8 +1,8 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols=10>
+    <v-row no-gutters>
+      <v-col cols=9>
         <v-row no-gutters>
+          <legends :width=configuration.size.svgWidth></legends>
           <svg :height="configuration.size.svgHeight" :width="configuration.size.svgWidth">
             <g v-for="(user,userIndex) in users" :key=userIndex>
               <g><text :x=user.x :y=user.y style="font-size: 14">{{user.name}}</text></g>
@@ -11,7 +11,7 @@
                   <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
                     @dblclick="goToInteractionView(user, segment)"
-                    @click="toggleTimeLockFlag"
+                    @click="toggleTimeLockFlag(user,segment)"
                     @mouseover="selectTimeSegment(user, segment)"></rect>
                 </g>
               </g>
@@ -36,21 +36,25 @@
           </svg>
         </v-row>
       </v-col>
-      <v-col cols=2>
+      <v-col cols=3>
         <v-row no-gutters>
-          <v-col cols=12><wordlist :resizewatcher=configuration.size.svgWidth></wordlist></v-col>
+          <v-col cols=12>
+            <wordlist :resizewatcher=configuration.size.svgWidth :lock=timeLockFlag></wordlist>
+            <v-btn @click="goToInteractionView(lockedItem.user, lockedItem.segment)" v-if=timeLockFlag block dark color=green style="margin-top:20px" height=40><v-icon>mdi-magnify</v-icon>Explore this segment</v-btn>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
-  </v-container>
 </template>
 
 <script>
 import wordlist from "../components/WordList";
+import legends from "../components/Legends";
 
 export default {
   components: {
-    wordlist
+    wordlist,
+    legends
   },
   data: function() {
     return {
@@ -62,7 +66,9 @@ export default {
         }
       },
       users: [],
-      timeLockFlag: false
+      timeLockFlag: false,
+      selectedIndicator: {},
+      lockedItem:{user:{},segment:{}}
     };
   },
   watch: {
@@ -83,8 +89,28 @@ export default {
     },
     datasetEndTime: function(){
       return this.$store.state.datasetEndTime;
+    }
+  },
+  methods: {
+    toggleTimeLockFlag: function(user,segment){
+      this.timeLockFlag = !this.timeLockFlag;
+      this.showSnack(this.timeLockFlag ? "Segment Locked" : "Segment Unlocked");
+      this.lockedItem.user = user;
+      this.lockedItem.segment = segment;
     },
-    selectedIndicator: function(){
+    selectTimeSegment(user,segment){
+      var hoveredUserID = this.selected.userID;
+      if(!this.timeLockFlag){
+        this.$store.commit("setTime", {min:0,max:user.endTime,range:[segment.start*10, segment.end*10]});
+        hoveredUserID = user.id;
+      }
+      this.$store.commit("setSelected", {
+        datasetID: this.selected.datasetID,
+        userID: hoveredUserID,
+        users: this.selected.users,
+        interactionTypes: this.selected.interactionTypes
+      });
+
       if(!this.timeLockFlag){
         var selectedTimeline = this.$store.state.timeline,
           left = 0,
@@ -101,39 +127,22 @@ export default {
 
         var selectedUser = this.users.find(function(user){return user.id == selectedUserID});
 
-        left = selectedUser? left : -50;
-        right = selectedUser? right : -50;
-        y = selectedUser ? selectedUser.y -height/2: -50;
-        return {left,right,height,y};
-      }
-      return this.selectedIndicator;
-    }
-  },
-  methods: {
-    toggleTimeLockFlag: function(){
-      this.timeLockFlag = !this.timeLockFlag;
-    },
-    selectTimeSegment(user,segment){
-      if(!this.timeLockFlag){
-        this.$store.commit("setSelected", {
-          datasetID: this.selected.datasetID,
-          userID: user.id,
-          users: this.selected.users,
-          interactionTypes: this.selected.interactionTypes
-        });
-        this.$store.commit("setTime", {min:0,max:user.endTime,range:[segment.start*10, segment.end*10]});
+        left = selectedUser? left : -500;
+        right = selectedUser? right : -500;
+        y = selectedUser ? selectedUser.y -height/2: -500;
+        this.selectedIndicator = {left,right,height,y};
       }
     },
     findSimilarities(){
       this.showSnack("Feature under development");
     },
-    showSnack: function(text){
-      this.$store.commit("showSnack", text);
+    showSnack: function(text, isPersistent){
+      this.$store.commit("showSnack", text, isPersistent);
     },
     resizeWithWindow: function(){
-      this.configuration.size.svgWidth = window.innerWidth * 0.6;
+      this.configuration.size.svgWidth = window.innerWidth * 0.55;
       this.configuration.size.svgHeight = window.innerHeight * 0.7;
-      this.configuration.size.segmentsLeftPadding = window.innerWidth * 0.1;
+      this.configuration.size.segmentsLeftPadding = window.innerWidth * 0.06;
       this.calculateAttributesForSegments();
     },
     goToInteractionView: function(user, segment){
@@ -195,9 +204,5 @@ export default {
   }
 };
 
-/*
- 
-              @mouseOver="highlightDistances(segment.ID, user.id, dataset.selectedID)" @mouseleave="resetHighlight()"
-              */
 </script>
 

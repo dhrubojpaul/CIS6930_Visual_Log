@@ -5,7 +5,7 @@ var InteractionType = {
             name: "Think Aloud",
             color: "#8dd3c7",
             onByDefault: true,
-            disabled: false,
+            disabled: true,
             capsName: "THINK_ALOUD",
             shape: "triangle_r"
         },
@@ -61,7 +61,7 @@ var InteractionType = {
             name: "Bookmark",
             color: "#fdb462",
             onByDefault: true,
-            disabled: false,
+            disabled: true,
             capsName: "BOOKMARK",
             shape: "rect"
         },
