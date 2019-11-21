@@ -53,7 +53,8 @@ export default {
         chart: {width: 0, height: 0},
         margin: {top: 10, right: 10, bottom: 100, left: 50}
       },
-      meta: {axis: {xLabel: "Time",yLabel: "Documents"}},
+	  meta: {axis: {xLabel: "Time",yLabel: "Documents"}},
+	  connectionHover: undefined,
       chart: undefined,
 	  transition: undefined,
 	  glyphs: {
@@ -554,13 +555,13 @@ export default {
 					})
 					.call(enter => enter.transition(component.transition)
 						.attr("r", function () {
-							return component.chart.yScale.bandwidth() * .2;
+							return component.chart.yScale.bandwidth() * .5;
 						})
 					),
 					update => update
 						.call(exit => exit.transition(component.transition)
 							.attr("r", function () {
-								return component.chart.yScale.bandwidth() * .2;
+								return component.chart.yScale.bandwidth() * .5;
 							})
 							.attr("cx", function (d) {
 								if (d.time < timeline.range[0]) {
