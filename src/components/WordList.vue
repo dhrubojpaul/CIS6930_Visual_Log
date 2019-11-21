@@ -60,7 +60,7 @@
           "Highlight": this.calculateWordsByInteractionType(interactionViewData, "HIGHLIGHT", stopWords),
           "Write Note": this.calculateWordsByInteractionType(interactionViewData, "WRITE_NOTE", stopWords),
           "Topic Change": this.calculateWordsByInteractionType(interactionViewData, "TOPIC_CHANGE", stopWords),
-          "Doc Open" : this.calculateDocOpenWords(this.$store.state.interactionViewData),
+          "Document Text" : this.calculateDocOpenWords(this.$store.state.interactionViewData),
         }
       },
       calculateWordsByInteractionType: function(interactionViewData, interactionType, stopWords){
