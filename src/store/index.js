@@ -75,7 +75,9 @@ export default new Vuex.Store({
     datasetEndTime: undefined,
     //document view
     selectedDocument: {title:""},
-    documentViewFlag: false
+    documentViewFlag: false,
+    //information in app bar
+    infoFlag: false,
   },
   mutations: {
     setTime(state, timeline){
@@ -149,6 +151,9 @@ export default new Vuex.Store({
                                 .documents.find(function(document){return document.id == currentDocumentID});
       temporarySelectedDocument.datasetName = datasetName;
       state.selectedDocument = temporarySelectedDocument;
+    },
+    setInfoFlag(state, value){
+      state.infoFlag = value;
     }
   },
   actions: {},

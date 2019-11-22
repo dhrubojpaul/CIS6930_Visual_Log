@@ -34,8 +34,32 @@
         <span class="title">Visual Summary of Log Data</span>
       </v-toolbar-title>
       <v-spacer/>
-      <v-btn icon to="/"><v-icon>mdi-home</v-icon></v-btn>
+      <div v-if="this.$route.name!='home'">
+        <v-btn icon to="/"><v-icon>mdi-home</v-icon></v-btn>
+        <v-btn text to="/overview">Overview</v-btn>
+        <v-btn text to="/timeline">Timeline</v-btn>
+      </div>
+      <v-btn icon @click="infoFlag = !infoFlag"><v-icon>mdi-information</v-icon></v-btn>
     </v-app-bar>
+
+    <v-bottom-sheet v-model="infoFlag">
+      <v-sheet height="80vh">
+        <v-row style="padding:5vh 10vw 2vh 10vw;">
+            <v-col cols=12>
+                <div style="max-height:70vh;overflow-x:hidden;overflow-y:scroll;">
+                  <h2>Query Panel</h2>
+                    hello
+                  <h2>Relevant Words Panel</h2>
+                    hello
+                  <h2>User Comparison View</h2>
+                    hello
+                  <h2>Interaction Exploration View</h2>
+                    hello
+                </div>
+            </v-col>
+        </v-row>
+      </v-sheet>
+    </v-bottom-sheet>
 
     <v-snackbar color="cyan darken-2" v-model="snack.flag">{{ snack.text }}
       <v-btn text @click="snack.flag = false">Close</v-btn>
@@ -105,6 +129,14 @@ export default {
       },
       set: function(newValue){
         this.$store.commit("setDrawer", newValue);
+      }
+    },
+    infoFlag: {
+      get: function(){
+        return this.$store.state.infoFlag;
+      },
+      set: function(newValue){
+        this.$store.commit("setInfoFlag", newValue);
       }
     },
     selectedFromState: function(){
