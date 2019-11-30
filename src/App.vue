@@ -39,7 +39,7 @@
         <v-btn text to="/overview">Overview</v-btn>
         <v-btn text to="/timeline">Timeline</v-btn>
       </div>
-      <v-btn icon @click="infoFlag = !infoFlag"><v-icon>mdi-information</v-icon></v-btn>
+      <!--<v-btn icon @click="infoFlag = !infoFlag"><v-icon>mdi-information</v-icon></v-btn>-->
     </v-app-bar>
 
     <v-bottom-sheet v-model="infoFlag">

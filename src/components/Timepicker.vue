@@ -17,7 +17,7 @@
       <v-col cols=12>
           <svg :width="size.width+2" :height="size.height+6" :style="'margin-left:'+size.width*.02">
             <g v-for="(segment,segmentIndex) in user.segments" :key=segmentIndex>
-                <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
+                <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypeArray" :key=interactionTypeIndex>
                     <rect :x=interactionType.x :y=interactionType.y+3 :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
                     @click="snapIntoSegment(segment)"></rect>
@@ -101,14 +101,12 @@ export default {
                 cumulativeSegmentOffset += segmentWidth;
 
                 var cumulativeInteractionHeight = 0;
-                Object.keys(segment.interactionTypes).forEach(function(interactionTypeName) {
-                    segment.interactionTypes[interactionTypeName].width = segmentWidth;
-                    segment.interactionTypes[interactionTypeName].height = (segment.interactionTypes[interactionTypeName].weight / 100) * component.size.height;
-                    segment.interactionTypes[interactionTypeName].x = segmentOffset;
-                    segment.interactionTypes[interactionTypeName].y = cumulativeInteractionHeight;
-                    cumulativeInteractionHeight += segment.interactionTypes[interactionTypeName].height;
-
-                    segment.interactionTypes[interactionTypeName].name = interactionTypeName;
+                segment.interactionTypeArray.forEach(function(interactionType) {
+                    interactionType.width = segmentWidth;
+                    interactionType.height = (interactionType.weight / 100) * component.size.height;
+                    interactionType.x = segmentOffset;
+                    interactionType.y = cumulativeInteractionHeight;
+                    cumulativeInteractionHeight += interactionType.height;
                 });
             });
         },

@@ -139,7 +139,8 @@ import InteractionType from "../interactionType.js";
                 //
                 segment.interactions = [];
                 segment.totalInteractionTypeCount = 0;
-                segment.interactionTypes = {};
+                //segment.interactionTypes = {};
+                segment.interactionTypeArray = [];
                 //
                 var segmentStart = segment.start * 10, segmentEnd = segment.end * 10;
                 segment.weight = (segmentEnd - segmentStart)/user.endTime;
@@ -149,11 +150,25 @@ import InteractionType from "../interactionType.js";
                     if ( (interactionStart >= segmentStart && interactionStart <= segmentEnd) || (interactionEnd >= segmentStart && interactionEnd <= segmentEnd)) {
                         if(InteractionType.enabledInteractionTypeKeyArray.includes(interaction.InteractionType)){
                             var interactionInsideSegment = { interactionType: interaction.InteractionType, documentID: interaction.ID};
+                            /*
                             if (!Object.keys(segment.interactionTypes).includes(interaction.InteractionType)) {
                                 segment.interactionTypes[interaction.InteractionType] = {count: 0,weight: 0};
                             }
-                            segment.totalInteractionTypeCount++;
                             segment.interactionTypes[interaction.InteractionType].count++;
+                            */
+                            var interactionTypeInsideSegment = segment.interactionTypeArray.find(function(interactionType){
+                                return interaction.InteractionType == interactionType.key;
+                            });
+                            if(!interactionTypeInsideSegment){
+                                segment.interactionTypeArray
+                                .push({ count: 1,
+                                        weight: 0,
+                                        key:interaction.InteractionType,
+                                        priority:InteractionType.types[interaction.InteractionType].priority});
+                            } else {
+                                interactionTypeInsideSegment.count++;
+                            }                       
+                            segment.totalInteractionTypeCount++;
                             interactionInsideSegment.start = interactionStart < segmentStart ? segmentStart : interactionStart;
                             interactionInsideSegment.end = interactionEnd > segmentEnd ? segmentEnd : interactionEnd;
                             interactionInsideSegment.key = interaction.InteractionType;
@@ -162,9 +177,12 @@ import InteractionType from "../interactionType.js";
                     }
                 });
 
-                Object.keys(segment.interactionTypes).forEach(function(interactionType){
-                    segment.interactionTypes[interactionType].weight = segment.interactionTypes[interactionType].count/(segment.totalInteractionTypeCount)*100;
-                    segment.interactionTypes[interactionType].color = InteractionType.types[interactionType].color;
+                segment.interactionTypeArray.forEach(function(interactionType){
+                    interactionType.weight = interactionType.count/(segment.totalInteractionTypeCount)*100;
+                    interactionType.color = InteractionType.types[interactionType.key].color;
+                });
+                segment.interactionTypeArray.sort(function(a,b){
+                    return a.priority - b.priority;
                 });
             });
         });

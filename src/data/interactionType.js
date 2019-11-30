@@ -7,7 +7,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: true,
             capsName: "THINK_ALOUD",
-            shape: "triangle_r"
+            shape: "triangle_r",
+            priority: 13,
         },
         "Doc_open": {
             name: "Doc Open",
@@ -15,7 +16,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "DOC_OPEN",
-            shape: "rect"
+            shape: "rect",
+            priority: 12,
         },
         "Reading": {
             name: "Doc Interact",
@@ -23,7 +25,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "READING",
-            shape: "rect"
+            shape: "rect",
+            priority: 11,
         },
         "Search": {
             name: "Search",
@@ -31,7 +34,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "SEARCH",
-            shape: "triangle_r"
+            shape: "triangle_r",
+            priority: 1,
         },
         "Highlight": {
             name: "Highlight",
@@ -39,7 +43,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "HIGHLIGHT",
-            shape: "diamond"
+            shape: "diamond",
+            priority: 2,
         },
         "Title_hover": {
             name: "Title Hover",
@@ -47,7 +52,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "BOOKMARK",
-            shape: "wye_r"
+            shape: "wye_r",
+            priority: 8,
         },
         "Mouse_hover": {
             name: "Mouse Hover",
@@ -55,7 +61,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: true,
             capsName: "Mouse Hover",
-            shape: "wye_r"
+            shape: "wye_r",
+            priority: 9,
         },
         "BOOKMARK": {
             name: "Bookmark",
@@ -63,7 +70,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: true,
             capsName: "BOOKMARK",
-            shape: "rect"
+            shape: "rect",
+            priority: 7,
         },
         "Connection": {
             name: "Connection",
@@ -71,7 +79,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "CONNECT",
-            shape: "circle"
+            shape: "circle",
+            priority: 6,
         },
         "Draging": {
             name: "Move",
@@ -79,7 +88,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "MOVE",
-            shape: "wye"
+            shape: "wye",
+            priority: 10,
         },
         "Create Note": {
             name: "Create Note",
@@ -87,7 +97,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "CREATE_NOTE",
-            shape: "rect"
+            shape: "rect",
+            priority: 3,
         },
         "Add note": {
             name: "Write in Note",
@@ -95,7 +106,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "WRITE_NOTE",
-            shape: "triangle"
+            shape: "triangle",
+            priority: 4,
         },
         "Topic_change": {
             name: "Topic Change",
@@ -103,7 +115,8 @@ var InteractionType = {
             onByDefault: true,
             disabled: false,
             capsName: "TOPIC_CHANGE",
-            shape: "rect"
+            shape: "rect",
+            priority: 5,
         }
     },
     capsList : {

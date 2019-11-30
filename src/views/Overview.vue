@@ -7,7 +7,7 @@
             <g v-for="(user,userIndex) in users" :key=userIndex>
               <g><text :x=user.x :y=user.y style="font-size: 14">{{user.name}}</text></g>
               <g v-for="(segment,segmentIndex) in user.segments" :key=segmentIndex>
-                <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypes" :key=interactionTypeIndex>
+                <g v-for="(interactionType,interactionTypeIndex) in segment.interactionTypeArray" :key=interactionTypeIndex>
                   <rect :x=interactionType.x :y=interactionType.y :style="'fill:' + interactionType.color"
                     :width=interactionType.width :height=interactionType.height
                     @dblclick="goToInteractionView(user, segment)"
@@ -175,16 +175,13 @@ export default {
           cumulativeSegmentOffset += segmentWidth;
 
           var cumulativeInteractionHeight = 0;
-          Object.keys(segment.interactionTypes).forEach(function(interactionTypeName) {
-            segment.interactionTypes[interactionTypeName];
-            segment.interactionTypes[interactionTypeName].width = segmentWidth;
-            segment.interactionTypes[interactionTypeName].height = (segment.interactionTypes[interactionTypeName].weight / 100) * segmentInnerHeight;
-            segment.interactionTypes[interactionTypeName].x = segmentOffset;
-            segment.interactionTypes[interactionTypeName].y = segmentOuterHeight * userIndex + cumulativeInteractionHeight;
-            cumulativeInteractionHeight += segment.interactionTypes[interactionTypeName].height;
-
-            segment.interactionTypes[interactionTypeName].name = interactionTypeName;
-            segment.interactionTypes[interactionTypeName].popupFlag = false;
+          segment.interactionTypeArray.forEach(function(interactionType){
+            interactionType.width = segmentWidth;
+            interactionType.height = (interactionType.weight / 100) * segmentInnerHeight;
+            interactionType.x = segmentOffset;
+            interactionType.y = segmentOuterHeight * userIndex + cumulativeInteractionHeight;
+            //interactionType.name = interactionTypeName;
+            cumulativeInteractionHeight += interactionType.height;
           });
         });
       });
