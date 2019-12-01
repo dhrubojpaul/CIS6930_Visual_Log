@@ -141,7 +141,7 @@ Interactions
 }
 
 .int-move {
-   fill: #fdb462;
+   fill: #fccde5;
    transition-duration: var(--speed_interaction_normal);
 }
 
@@ -273,7 +273,7 @@ Interactions
 }
 
 .int-toolt-move {
-   background: #fdb462 !important;
+   background: #fccde5 !important;
    color: black !important;
    opacity: 0.9;
 }

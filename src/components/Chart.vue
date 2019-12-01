@@ -180,52 +180,52 @@ export default {
 		var component = this;
 		var tooltipDiv = d3.select(".tooltip")
 		var tooltipOffset = [0, 30]
-		if (interactionTypeList.THINK_ALOUD) {
-			component.glyphs.think = component.chart.plotArea.selectAll("." + LegendValues.THINK_ALOUD.class)
-				.data(interactionViewData.THINK_ALOUD)
-				.join(
-					enter => enter.append('path')
-					.attr("class", LegendValues.THINK_ALOUD.class)
-					.attr("d", d3.symbol().type(d3.symbolTriangle).size(function (){ return component.chart.yScale.bandwidth()*10;}))
-						.attr("transform", function(d) {
-							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+component.size.margin.top/2)+") rotate (180)";
-						})
-					.on("mouseover", function (d) {
-						d3.select (this).attr("fill","red");
-						tooltipDiv.attr("class", "tooltip " + LegendValues.THINK_ALOUD.classTT)
-							.transition()
-								.style("left", (d3.event.pageX + tooltipOffset[0]) + "px")		
-								.style("top", (d3.event.pageY + tooltipOffset[1]) + "px")
-								.delay(10).duration(10)
-								.transition().duration(200)		
-								.style("opacity", 0.9)
-								.text("Think Aloud: "+ component.formatAsTime(d.time / 10)+" \""+d.Text+"\"");	
-					})					
-					.on("mouseout", function() {	
-						tooltipDiv.transition()		
-							.duration(500)		
-							.style("opacity", 0);	
-					})
-					.call(enter => enter.transition(component.transition)
-						.attr("d", d3.symbol().type(d3.symbolTriangle).size(function (){ return component.chart.yScale.bandwidth()*10;}))
-						.attr("transform", function(d) {
-							component.chart.yScale.bandwidth()
-							return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+component.size.margin.top/2)+") rotate (180)";
-						})
-					),
-					update => update
-						.call(exit => exit.transition(component.transition)
-							.attr("d", d3.symbol().type(d3.symbolTriangle).size(function (){ return component.chart.yScale.bandwidth()*10;}))
-							.attr("transform", function(d) {
-								component.chart.yScale.bandwidth()
-								return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+component.size.margin.top/2)+") rotate (180)";
-							})
-						),
-					exit => exit.remove()
-				)
-		} else {
-			if(component.glyphs.think) component.glyphs.think.remove();
-		}
+		// if (interactionTypeList.THINK_ALOUD) {
+		// 	component.glyphs.think = component.chart.plotArea.selectAll("." + LegendValues.THINK_ALOUD.class)
+		// 		.data(interactionViewData.THINK_ALOUD)
+		// 		.join(
+		// 			enter => enter.append('path')
+		// 			.attr("class", LegendValues.THINK_ALOUD.class)
+		// 			.attr("d", d3.symbol().type(d3.symbolTriangle).size(function (){ return component.chart.yScale.bandwidth()*10;}))
+		// 				.attr("transform", function(d) {
+		// 					return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+component.size.margin.top/2)+") rotate (180)";
+		// 				})
+		// 			.on("mouseover", function (d) {
+		// 				d3.select (this).attr("fill","red");
+		// 				tooltipDiv.attr("class", "tooltip " + LegendValues.THINK_ALOUD.classTT)
+		// 					.transition()
+		// 						.style("left", (d3.event.pageX + tooltipOffset[0]) + "px")		
+		// 						.style("top", (d3.event.pageY + tooltipOffset[1]) + "px")
+		// 						.delay(10).duration(10)
+		// 						.transition().duration(200)		
+		// 						.style("opacity", 0.9)
+		// 						.text("Think Aloud: "+ component.formatAsTime(d.time / 10)+" \""+d.Text+"\"");	
+		// 			})					
+		// 			.on("mouseout", function() {	
+		// 				tooltipDiv.transition()		
+		// 					.duration(500)		
+		// 					.style("opacity", 0);	
+		// 			})
+		// 			.call(enter => enter.transition(component.transition)
+		// 				.attr("d", d3.symbol().type(d3.symbolTriangle).size(function (){ return component.chart.yScale.bandwidth()*10;}))
+		// 				.attr("transform", function(d) {
+		// 					component.chart.yScale.bandwidth()
+		// 					return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+component.size.margin.top/2)+") rotate (180)";
+		// 				})
+		// 			),
+		// 			update => update
+		// 				.call(exit => exit.transition(component.transition)
+		// 					.attr("d", d3.symbol().type(d3.symbolTriangle).size(function (){ return component.chart.yScale.bandwidth()*10;}))
+		// 					.attr("transform", function(d) {
+		// 						component.chart.yScale.bandwidth()
+		// 						return "translate(" + component.chart.xScale(d.time)+", "+(component.chart.yScale(d.ID)+component.size.margin.top/2)+") rotate (180)";
+		// 					})
+		// 				),
+		// 			exit => exit.remove()
+		// 		)
+		// } else {
+		// 	if(component.glyphs.think) component.glyphs.think.remove();
+		// }
 		
 		if (interactionTypeList.DOC_OPEN) {
 			component.glyphs.open = component.chart.plotArea.selectAll("." + LegendValues.DOC_OPEN.class)
@@ -633,7 +633,7 @@ export default {
 		}
 
 		//TITLE HOVER
-		//TODO @jeremy - title hover events? look for the BOOKMARK interations in (data)
+		//TODO @jeremy - title hover events-are actually BOOKMARK interations in (data) but Mouse_hover events in the raw data itself
 		if (interactionTypeList.BOOKMARK) {
 			component.glyphs.hover = component.chart.plotArea.selectAll("." + LegendValues.BOOKMARK.class)
 				.data(interactionViewData.BOOKMARK, function (d) {
