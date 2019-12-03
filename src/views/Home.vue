@@ -29,6 +29,11 @@
           <v-btn to="/overview">Get In</v-btn>
         </v-layout>
       </v-flex>
+      <v-flex xs12 mb-5>
+        <v-layout justify-center>
+          <v-btn text to="/demo">Watch Demo</v-btn>
+        </v-layout>
+      </v-flex> 
     </v-layout>
   </v-container>
 </template>

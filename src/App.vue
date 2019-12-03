@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app clipped>
+    <v-navigation-drawer v-model="drawer" app clipped v-if="this.$route.name!='demo'">
       <v-list dense>
         <v-list-item v-if="this.$route.name=='timeline'">
           <v-btn block to="/overview">Back to Overview</v-btn>
@@ -28,7 +28,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-left color="blue" dense dark>
+    <v-app-bar app clipped-left color="blue" dense dark v-if="this.$route.name!='demo'">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="this.$route.name !='home'"/>
       <v-toolbar-title class="mr-12 align-center" >
         <span class="title">Visual Summary of Log Data</span>
